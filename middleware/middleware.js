@@ -12,13 +12,13 @@ let token = req.headers.token
     return res.status(401).json({ message: 'Unauthorized' });
   }
 };    
-exports.adminMiddleware = (req, res, next) => {
-  // Check if the user is authenticated and has admin role
+const checkAdminRole = (req, res, next) => {
   if (req.user && req.user.role === 'admin') {
-    // User is an admin, proceed to the next middleware or route handler
-    next();
+    next(); // User is an admin, proceed to the next middleware
   } else {
-    // User is not an admin, return a 403 Forbidden response
-    res.status(403).json({ message: 'Forbidden' });
+    res.status(403).json({ message: 'Access denied' });
   }
+};
+module.exports = {
+  checkAdminRole
 };
