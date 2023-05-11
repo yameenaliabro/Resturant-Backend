@@ -7,7 +7,8 @@ let addorder =  async (req, res) => {
         address: req.body.address,
         city: req.body.city,
         zipcode: req.body.zipcode,
-        date:req.body.date  
+        date:req.body.date,
+        price:req.body.price
     }) 
     let productsave =  await getproduct.save()
        res.send(productsave)
@@ -16,15 +17,17 @@ let getallorder = async (req,res) =>{
 let getallorder = await Order.find().exec()
 res.send(getallorder) 
 } 
-let changestatus =  async (req, res) => {
+
+let changestatus = async (req, res) => {
   try {
-    const { id } = req.params;
+    const { orderId } = req.params;
     const { status } = req.body;
 
-    const order = await Order.findByIdAndUpdate(id, { status }, { new: true });
+    const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
+
     res.json(order);
   } catch (error) {
-    res.status(500).json({ error: 'Internal server error' });
+    res.status(500).json({ message: 'Error updating order status' });
   }
 };
 module.exports = {

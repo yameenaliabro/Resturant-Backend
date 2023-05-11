@@ -12,6 +12,7 @@ let orderschema = mongoose.Schema({
         date: { type: Date, default: Date.now },
         status:{},
         status: { type: String, enum: ['rejected', 'process'], default: 'process' },
+        price:{type:String,}
 })
 let Order = mongoose.model("Order",orderschema)
 module.exports = Order 

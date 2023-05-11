@@ -4,5 +4,5 @@ const order = express.Router()
 const { addorder, getallorder, changestatus} = require("../controlles/Order")
 order.post("/user",addorder)
 order.get("/allorder",getallorder)
-order.put("/delteorder/:id",changestatus)
+order.patch("/setstatus/:id",changestatus)
 module.exports = order; 
