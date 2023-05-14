@@ -21,5 +21,5 @@ app.use("/auth",authrouter)
 app.use("/food",product);
 app.use("/order",order)
 app.use("/",user)
-app.listen(2000)
+app.listen(80)
     
