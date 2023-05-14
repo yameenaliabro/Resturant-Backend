@@ -8,30 +8,58 @@ let addorder =  async (req, res) => {
         city: req.body.city,
         zipcode: req.body.zipcode,
         date:req.body.date,
+        id : req.body.id,
         price:req.body.price
     }) 
     let productsave =  await getproduct.save()
-       res.send(productsave)
+       res.send(productsave) 
+
 }
 let getallorder = async (req,res) =>{
 let getallorder = await Order.find().exec()
 res.send(getallorder) 
 } 
-
-let changestatus = async (req, res) => {
+;
+let acceptuser = async (req,res) => {
+  try{
+const  {id} = req.params    
+const order  = await Order.findByIdAndUpdate(id,{status : "process"},{new: true})
+if(!order){
+  return res.status(404).json({ message: 'Order not found' });
+}
+res.json(order)
+  }catch(err){
+    res.status(500).json("server internal")
+  }
+}
+let rejectstatus = async(req,res) =>{
+  try{
+    const  {id} = req.params
+    const order  = await Order.findByIdAndUpdate(id,{status : "reject"},{new: true})
+    if(!order){
+      return res.status(404).json({ message: 'Order not found' });
+    }
+    res.json(order)
+      }catch(err){
+        res.status(500).json("server intenal")
+    
+      }
+}
+let usercheck  = async (req, res) => {
   try {
-    const { orderId } = req.params;
-    const { status } = req.body;
-
-    const order = await Order.findByIdAndUpdate(orderId, { status }, { new: true });
-
-    res.json(order);
+    const { id } = req.params
+    const orders = await Order.find({ id });
+    res.json(orders);
   } catch (error) {
-    res.status(500).json({ message: 'Error updating order status' });
+    console.error(error);
+    res.status(500).json({ error: 'Server Error' });
   }
 };
 module.exports = {
     addorder,
     getallorder,
-    changestatus
+    acceptuser,
+    rejectstatus,
+    usercheck,
+  
 }
