@@ -8,6 +8,7 @@ const authrouter = require("./router/auth");
 const product = require("./router/Product");
 const order = require("./router/Order");
 const user = require("./router/User");
+const { config } = require("dotenv");
 app.use(cors())
 app.use(bodyparser.urlencoded({extended: false}))
 app.use(bodyparser.json());
@@ -19,5 +20,4 @@ app.use("/auth",authrouter)
 app.use("/food",product);
 app.use("/order",order)
 app.use("/",user)
-app.listen(80)
-    
+app.listen(2000)
